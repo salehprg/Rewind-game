@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412f62707b64c7e42820768bee9f97b6, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  maxspeed: 0
+  maxspeed: 12
   speed: 0
-  jumpHeight: 0
-  jumpcut_multiplier: 0
+  jumpHeight: 16
+  jumpcut_multiplier: 0.5
   falling: 0
   rising: 0
   climbing: 0
