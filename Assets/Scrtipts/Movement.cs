@@ -6,11 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
-    public float maxspeed;
-    public float speed;
-    public float jumpHeight;
-    public float jumpcut_multiplier;
-    public bool falling , rising , climbing;
+
+    [SerializeField]
+    PlayerData playerData;
 
     Vector2 moveinput;
 
@@ -49,34 +47,36 @@ public class Movement : MonoBehaviour
         
         if(rigidbody.velocity.y < 0)
         {
-            rising = false;
-            falling = true;
+            playerData.rising = false;
+            playerData.falling = true;
         }
         else if(rigidbody.velocity.y > 0)
         {
-            rising = true;
-            falling = false;
+            playerData.rising = true;
+            playerData.falling = false;
         }
         else
-            rising = falling = false;
+            playerData.rising = playerData.falling = false;
 
     }
 
     private void FixedUpdate() 
     {
-        float speedX = maxspeed * moveinput.x;
+        float speedX = playerData.maxspeed * moveinput.x;
 		speedX = Mathf.Lerp(rigidbody.velocity.x, speedX, 1);
 
         rigidbody.velocity = new Vector2(speedX , rigidbody.velocity.y);
         
+        playerData.speed = Mathf.Abs(speedX);
+
         if(jump)
         {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, playerData.jumpHeight);
             jump = false;
         }
         if(jumpcut)
         {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x , rigidbody.velocity.y * jumpcut_multiplier);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x , rigidbody.velocity.y * playerData.jumpcut_multiplier);
             jumpcut = false;
         }
 
@@ -108,11 +108,11 @@ public class Movement : MonoBehaviour
 
             if(direction >= -0.1f && direction <= 0.1f)
             {
-                climbing = true;
+                playerData.climbing = true;
                 jumpcount = 0;
             }
             else
-                climbing = false;
+                playerData.climbing = false;
         }
     }
 }
